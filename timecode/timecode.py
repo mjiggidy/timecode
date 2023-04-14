@@ -1,19 +1,10 @@
-import typing, abc, copy
+import typing, copy
 from . import TimecodeMode, NonDropFrame
 
 class Timecode:
 	"""Timecode representing a given frame number and rate"""
 
-	def __init__(self, timecode:typing.Union[str,int,"Timecode"], mode:typing.Optional[TimecodeMode]=None, rate:typing.Optional[int]=None):
-
-
-		if isinstance(timecode, self.__class__):
-			if mode is not None and timecode.mode != mode:
-				raise ValueError("The input timecode's mode does not match the requested mode")
-			elif rate is not None and timecode.rate != rate:
-				raise ValueError("The input timecode's framerate does not match the requested rate")
-			
-			return copy.copy(timecode)
+	def __init__(self, timecode:typing.Union[str,int], mode:typing.Optional[TimecodeMode]=None, rate:typing.Optional[int]=None):
 
 		mode = mode or NonDropFrame()
 		
