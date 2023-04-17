@@ -4,20 +4,69 @@ from . import TimecodeMode, NonDropFrame
 class Timecode:
 	"""Timecode representing a given frame number and rate"""
 
-	def __init__(self, timecode:typing.Union[str,int], mode:typing.Optional[TimecodeMode]=None, rate:typing.Optional[int]=None):
+	DEFAULT_RATE = 24
+	"""The default frame rate to use if not provided"""
 
-		mode = mode or NonDropFrame()
+	DEFAULT_MODE = NonDropFrame
+	"""The default frame counting mode class to use if not provided"""
+
+	__slots__ = ("_mode", "_rate", "_frame_number")
+
+	def __init__(self, timecode:typing.Union[str,int, "Timecode"], mode:typing.Optional[TimecodeMode]=None, rate:typing.Optional[int]=None):
+
+		# If a timecode object is provided, make a copy of it
+		if isinstance(timecode, self.__class__):
+			if mode is not None and timecode.mode is type(mode):
+				raise ValueError(f"The mode provided ({mode}) does not match the mode of the timecode object passed ({timecode.mode}).  Use Timecode.convert() to change the mode of an existing Timecode object.")
+			elif rate is not None and timecode.rate != rate:
+				raise ValueError(f"The rate provided ({rate}) does not match the rate of the timecode object passed ({timecode.rate}).  Use Timecode.convert() to change the rate of an existing Timecode object.")
+			mode = timecode.mode
+			rate = timecode.rate
+			timecode = timecode.frame_number
+
+		# Create a new timecode object from raw parameters
+		self._mode = self._normalize_mode(mode)
+		self._rate = self._normalize_rate(rate)
+		self._frame_number = self._mode._frame_number_from_string(str(timecode), self._rate)
+
+	@classmethod
+	def _normalize_rate(cls, rate:typing.Optional[int]=None) -> int:
+		"""Validate and clean the user-provided rate"""
 		
-		if rate is not None:
-			if not isinstance(rate, int) or not rate > 0:
-				raise ValueError(f"Invalid timecode rate: Must be a positive integer")
-		else:
-			rate = 24
-
-		self._mode = mode or NonDropFrame()
-		self._rate = rate
-		self._frame_number = self._parse_frame_number(timecode)
+		if rate is None:
+			return cls.DEFAULT_RATE
+		
+		elif isinstance(rate, int) and rate > 0:
+			return int(rate)
+		
+		raise ValueError("Timecode rate must be a positive integer")
 	
+	@classmethod
+	def _normalize_mode(cls, mode:TimecodeMode) -> TimecodeMode:
+		"""Validate and clean the user-provided timecode mode"""
+
+		if mode is None:
+			return cls.DEFAULT_MODE()
+
+		if isinstance(mode, TimecodeMode):
+			return mode
+
+		raise ValueError(f"Mode must be an instance of the `TimecodeMode` class")
+	
+	def convert(self, *, mode:typing.Optional[TimecodeMode]=None, rate:typing.Optional[int]=None):
+		"""Create a new timecode object resampled to a new rate or frame counting mode"""
+
+		# NOTE: These fellas'll be further validated in the constructor
+		new_rate = rate or self.rate
+		new_mode = mode or self.mode
+		new_frame_number = round(self.frame_number * (new_rate/self.rate))
+
+		return self.__class__(
+			timecode = new_frame_number,
+			mode = new_mode,
+			rate = new_rate
+		)
+
 	@property
 	def frame_number(self) -> int:
 		"""The timecode as a frame number"""
@@ -62,10 +111,6 @@ class Timecode:
 	def is_positive(self) -> bool:
 		"""Is the timecode positive"""
 		return not self.is_negative
-	
-	def _parse_frame_number(self, timecode:typing.Union[str,int]) -> int:
-		"""Call the frame number parser"""
-		return self._mode._frame_number_from_string(str(timecode), self._rate)
 	
 	def __str__(self) -> str:
 		return self._mode._string_from_frame_number(self._frame_number, self._rate)
