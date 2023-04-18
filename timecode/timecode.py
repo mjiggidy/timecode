@@ -4,9 +4,6 @@ from . import TimecodeMode, NonDropFrame
 class Timecode:
 	"""Timecode representing a given frame number and rate"""
 
-	DEFAULT_RATE = 24
-	"""The default frame rate to use if not provided"""
-
 	DEFAULT_MODE = NonDropFrame
 	"""The default frame counting mode class to use if not provided"""
 
@@ -26,20 +23,8 @@ class Timecode:
 
 		# Create a new timecode object from raw parameters
 		self._mode = self._normalize_mode(mode)
-		self._rate = self._normalize_rate(rate)
+		self._rate = self._mode.validate_rate(rate)
 		self._frame_number = self._mode._frame_number_from_string(str(timecode), self._rate)
-
-	@classmethod
-	def _normalize_rate(cls, rate:typing.Optional[int]=None) -> int:
-		"""Validate and clean the user-provided rate"""
-		
-		if rate is None:
-			return cls.DEFAULT_RATE
-		
-		elif isinstance(rate, int) and rate > 0:
-			return int(rate)
-		
-		raise ValueError("Timecode rate must be a positive integer")
 	
 	@classmethod
 	def _normalize_mode(cls, mode:TimecodeMode) -> TimecodeMode:
