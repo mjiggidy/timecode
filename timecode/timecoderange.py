@@ -43,7 +43,7 @@ class TimecodeRange:
 	def __len__(self) -> int:
 		return abs(int(self.duration))
 	
-	def __iter__(self) -> "TimecodeRange":
+	def __iter__(self) -> typing.Iterator["Timecode"]:
 		return (self.start.__class__(x, mode=self.mode, rate=self.rate) for x in range(self.start.frame_number, self.end.frame_number))
 	
 	def __repr__(self) -> str:
