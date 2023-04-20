@@ -30,14 +30,6 @@ class TimecodeMode(abc.ABC):
 		
 		raise ValueError("Timecode rate must be a positive integer")
 
-	@abc.abstractclassmethod
-	def _frame_number_from_string(cls, timecode:str, rate:int) -> int:
-		"""Validate and convert a timecode string to the frame number it represents"""
-
-	@abc.abstractclassmethod
-	def _string_from_frame_number(cls, framenumber:int, rate:int) -> str:
-		"""Format a timecode string from a given frame number"""
-
 	@classmethod
 	def _santize_string(cls, timecode:str) -> str:
 		"""Remove any weirdness"""
@@ -88,7 +80,7 @@ class TimecodeMode(abc.ABC):
 			str(cls.hours(framenumber, rate)).zfill(2),
 			str(cls.minutes(framenumber, rate)).zfill(2),
 			str(cls.seconds(framenumber, rate)).zfill(2),
-			str(framenumber % rate).zfill(frame_fill)
+			str(cls.frames(framenumber, rate)).zfill(frame_fill)
 		])
 
 		return sign + tc_string
@@ -148,13 +140,85 @@ class DropFrame(TimecodeMode):
 	def validate_rate(cls, rate:typing.Optional[int]=None) -> int:
 		"""Validate and clean the user-provided rate"""
 		
-		# Do the dusual checks
+		# Do the usual checks
 		rate = super().validate_rate(rate)
 
 		if rate % 30:
 			raise ValueError("Drop Frame mode requires the rate to be a multiple of 30.")
 		
 		return rate
+	
+	@classmethod
+	def _frame_number_from_string(cls, timecode: str, rate: int) -> int:
+		
+		# First get the base frame number without drops
+		frame_number = super()._frame_number_from_string(timecode, rate)
+
+		# TODO: return
+		return frame_number
+
+	@classmethod
+	def get_dropped_frames(cls, framenumber:int, rate:int) -> int:
+		"""Calculate the number of frames to drop"""
+
+		# NDF:
+		# 00:00:59:23 = 1799
+		# 00:01:00:00 = 1800
+
+		# DF:
+		# 00;00;59;23 = 1799
+		# 00;01;00;02 = 1802 (1800 + 2)
+
+		# For every full segment, add 9 * 2 * (rate/30)
+		# For every start segment (rate*61), add 2
+		# For every partial sgment, add 2
+
+		drop_frames_per_minute  = 2 * int(rate/30)
+		drop_frames_per_segment = drop_frames_per_minute * 9
+
+		full_minute = rate * 60
+		drop_minute = full_minute - drop_frames_per_minute
+		drop_segment = full_minute + 9*drop_minute
+
+		# Get full segments
+		num_drop_segments = framenumber // drop_segment
+		framenumber += num_drop_segments * drop_frames_per_segment
+
+		# Remove full minute
+		framenumber = max(0, framenumber - full_minute)
+
+		# Get remaining drop segments
+		num_drop_minutes = framenumber // drop_minute
+
+		return drop_frames_per_segment * num_drop_segments + drop_frames_per_minute * num_drop_minutes + 2
+	
+	@classmethod
+	def hours(cls, framenumber:int, rate:int) -> int:
+		"""Hours element"""
+		dropped_frames = cls.get_dropped_frames(framenumber, rate)
+		return super().hours(framenumber+dropped_frames, rate)
+	
+	@classmethod
+	def minutes(cls, framenumber:int, rate:int) -> int:
+		"""Minutes element"""
+		dropped_frames = cls.get_dropped_frames(framenumber, rate)
+		return super().minutes(framenumber+dropped_frames, rate)
+	
+	@classmethod
+	def seconds(cls, framenumber:int, rate: int) -> int:
+		"""Seconds element"""
+		dropped_frames = cls.get_dropped_frames(framenumber, rate)
+		return super().seconds(framenumber+dropped_frames, rate)
+	
+	@classmethod
+	def frames(cls, framenumber:int, rate:int) -> int:
+		"""Frames element"""
+		dropped_frames = cls.get_dropped_frames(framenumber, rate)
+		return super().frames(framenumber+dropped_frames, rate)
+	
+	@classmethod
+	def _string_from_frame_number(cls, framenumber: int, rate: int) -> str:
+		return super()._string_from_frame_number(framenumber, rate)
 
 	@classmethod
 	def __str__(cls):
