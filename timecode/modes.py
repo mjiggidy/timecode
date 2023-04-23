@@ -172,26 +172,34 @@ class DropFrame(TimecodeMode):
 		# For every full segment, add 9 * 2 * (rate/30)
 		# For every start segment (rate*61), add 2
 		# For every partial sgment, add 2
+		
+		multiplier = -1 if framenumber <  0 else 1
+		framenumber_normalized = abs(framenumber)
+		
+		# Drop-frame adds two frames every minute, except every ten minutes
+		# First: Let's get some things straight
+		drop_offset = (2 * rate // 30)			# Frames to drop -- 2 per 30fps
+		
+		full_minute = rate * 60							# Length of a full non-drop minute (in frames) (60 seconds)
+		drop_minute = full_minute - drop_offset			# Length of a drop-minute (in frames)
+		drop_segment = full_minute + (drop_minute * 9)	# Length of a drop-segment (in frames) (One full minute + Nine drop minutes = 10 Minutes)
+		
+		# So how many full 10-minute drop-segments have elapsed
+		drop_segments_elapsed = framenumber_normalized // drop_segment
 
-		drop_frames_per_minute  = 2 * int(rate/30)
-		drop_frames_per_segment = drop_frames_per_minute * 9
+		# And as for the remaining frames at the end...
+		remaining_frames = framenumber_normalized % drop_segment
+		remaining_drop_frames = max(remaining_frames - full_minute + 1, 0)	# I don't understand why +1 yet, but that was a problem for like three days. max() will be bad for negative values
+		
+		# Number of complete drop-minutes
+		drop_minutes_elapsed = remaining_drop_frames // drop_minute
 
-		full_minute = rate * 60
-		drop_minute = full_minute - drop_frames_per_minute
-		drop_segment = full_minute + 9*drop_minute
+		# And then any other frames will need a 2-frame boost! Oooh!
+		remainder = drop_offset if (remaining_drop_frames % drop_minute) else 0
 
-		# Get full segments
-		num_drop_segments = framenumber // drop_segment
-		framenumber += num_drop_segments * drop_frames_per_segment
 
-		# Remove full minute
-		framenumber = max(0, framenumber - full_minute)
+		return ((drop_segments_elapsed * (9 * drop_offset)) + (drop_minutes_elapsed * drop_offset) + remainder) * multiplier
 
-		# Get remaining drop segments
-		num_drop_minutes = framenumber // drop_minute
-
-		return drop_frames_per_segment * num_drop_segments + drop_frames_per_minute * num_drop_minutes + 2
-	
 	@classmethod
 	def hours(cls, framenumber:int, rate:int) -> int:
 		"""Hours element"""
@@ -218,7 +226,7 @@ class DropFrame(TimecodeMode):
 	
 	@classmethod
 	def _string_from_frame_number(cls, framenumber: int, rate: int) -> str:
-		return super()._string_from_frame_number(framenumber, rate)
+		return super()._string_from_frame_number(framenumber, rate)  + f" ({cls.get_dropped_frames(framenumber, rate)})"
 
 	@classmethod
 	def __str__(cls):
