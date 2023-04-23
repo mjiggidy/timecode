@@ -4,7 +4,7 @@ from . import Timecode, TimecodeMode
 class TimecodeRange:
 	"""A timecode range"""
 	
-	def __init__(self, start:typing.Union[Timecode,str,int], duration=typing.Union[Timecode,int,None], end=typing.Union[Timecode,int,None]):
+	def __init__(self, start:typing.Union[Timecode,str,int], duration:typing.Union[Timecode,int,None]=None, end=typing.Union[Timecode,int,None]):
 		
 		self._start_tc = start if isinstance(start, Timecode) else Timecode(start)
 		
