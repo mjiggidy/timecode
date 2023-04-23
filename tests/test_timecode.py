@@ -14,7 +14,14 @@ print("Timecode 2 resampled is", repr(tc4))
 
 print("---")
 
-tc3 = Timecode("01:00:00:00", mode=DropFrame())
+#print(Timecode(30*60, rate=30))
+#exit()
 
-print("Timecode 3 is", repr(tc3))
-print("+1 is ", tc3+1)
+print("30 DF range:")
+prev_tc:Timecode = None
+for tc in TimecodeRange(start=Timecode(0, mode=DropFrame()), duration=Timecode(5000000, mode=DropFrame())):
+	if prev_tc is not None and prev_tc.frames != (tc.frames-1)%tc.rate:
+		print(prev_tc, f"({prev_tc.frame_number})")
+		print(tc, f"({tc.frame_number})")
+		print("\n")
+	prev_tc = tc
