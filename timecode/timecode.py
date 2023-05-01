@@ -1,15 +1,17 @@
-import typing, copy
-from . import TimecodeMode, NonDropFrame
+"""Contains the `Timecode` class, which represents a single frame in the context of a given frame rate"""
+
+import typing
+from . import Modes
 
 class Timecode:
 	"""Timecode representing a given frame number and rate"""
 
-	DEFAULT_MODE = NonDropFrame
+	DEFAULT_MODE = Modes.NonDropFrame
 	"""The default frame counting mode class to use if not provided"""
 
 	__slots__ = ("_mode", "_rate", "_frame_number")
 
-	def __init__(self, timecode:typing.Union[str,int, "Timecode"], mode:typing.Optional[TimecodeMode]=None, rate:typing.Optional[int]=None):
+	def __init__(self, timecode:typing.Union[str,int, "Timecode"], mode:typing.Optional[Modes.TimecodeMode]=None, rate:typing.Optional[int]=None):
 
 		# If a timecode object is provided, make a copy of it
 		if isinstance(timecode, self.__class__):
@@ -27,18 +29,18 @@ class Timecode:
 		self._frame_number = self._mode._frame_number_from_string(str(timecode), self._rate)
 	
 	@classmethod
-	def _normalize_mode(cls, mode:TimecodeMode) -> TimecodeMode:
+	def _normalize_mode(cls, mode:Modes.TimecodeMode) -> Modes.TimecodeMode:
 		"""Validate and clean the user-provided timecode mode"""
 
 		if mode is None:
 			return cls.DEFAULT_MODE()
 
-		if isinstance(mode, TimecodeMode):
+		if isinstance(mode, Modes.TimecodeMode):
 			return mode
 
 		raise ValueError(f"Mode must be an instance of the `TimecodeMode` class")
 	
-	def convert(self, *, mode:typing.Optional[TimecodeMode]=None, rate:typing.Optional[int]=None):
+	def convert(self, *, mode:typing.Optional[Modes.TimecodeMode]=None, rate:typing.Optional[int]=None):
 		"""Create a new timecode object resampled to a new rate or frame counting mode"""
 
 		# NOTE: These fellas'll be further validated in the constructor
@@ -63,7 +65,7 @@ class Timecode:
 		return self._rate
 	
 	@property
-	def mode(self) -> TimecodeMode:
+	def mode(self) -> Modes.TimecodeMode:
 		"""The counting mode used with this timecode"""
 		return self._mode
 	
