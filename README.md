@@ -10,11 +10,13 @@ The goal is to support custom frame counting modes, handle frame rate conversion
 
 The `Timecode` class defaults to 24fps, Non-Drop Frame timecode.  A frame number or a timecode string can be given:
 
-     from timecode import Timecode
-     tc = Timecode("01:00:00:00")
-     print("Repr:",repr(tc))
-     print("String:",tc)
-     print("Frames:",tc.frame_number)
+```python
+from timecode import Timecode
+tc = Timecode("01:00:00:00")
+print("Repr:",repr(tc))
+print("String:",tc)
+print("Frames:",tc.frame_number)
+```
 
 Output:
 
@@ -24,11 +26,13 @@ Output:
      
 Frame rate and counting modes can be specified explicitly:
 
-     from timecode import Timecode, Modes
-     tc = Timecode("01:00:00:00", rate=24, mode=Modes.NonDropFrame())
-     print("Repr:",repr(tc))
-     print("String:",tc)
-     print("Frames:",tc.frame_number)
+```python
+from timecode import Timecode, Modes
+tc = Timecode("01:00:00:00", rate=24, mode=Modes.NonDropFrame())
+print("Repr:",repr(tc))
+print("String:",tc)
+print("Frames:",tc.frame_number)
+```
 
 Output will be the same as before:
 
@@ -42,11 +46,13 @@ Counting modes are provided in the `Modes` submodule.  `NonDropFrame` and `DropF
 
 Each counting mode defaults to an ideal frame rate if not specified.  `NonDropFrame` creats a `Timecode` object with `rate=24` by default.  `DropFrame` creates a `Timecode` object with `rate=30` by default.  Of course, specifying a `Timecode` with `rate=` will force that frame rate.
 
-     from timecode import Timecode, Modes
-     tc = Timecode(86400, mode=Modes.DropFrame())
-     print("Repr:",repr(tc))
-     print("String:",tc)
-     print("Frames:",tc.frame_number)
+```python
+from timecode import Timecode, Modes
+tc = Timecode(86400, mode=Modes.DropFrame())
+print("Repr:",repr(tc))
+print("String:",tc)
+print("Frames:",tc.frame_number)
+```
 
 Output:
 
@@ -58,22 +64,24 @@ Output:
 
 A `TimecodeRange` object defines a continuous range of frames.  Creating a `TimecodeRange` object involves specifying two of `start`, `duration`, and `end`.
 
-     from timecode import Timecode, TimecodeRange
-     
-     tc_start    = Timecode("01:00:00:00")
-     tc_duration = Timecode("01:00")
-     
-     tc_range = TimecodeRange(start=tc_start, duration=tc_duration)
-     
-     print("Repr:",repr(tc_range))
-     print("Len:",len(tc_range))
-     print("Start:",tc_range.start)
-     print("End:",tc_range.end)
-     
-     print("Loop:")
-     for tc in tc_range:
-          print(tc)
-     
+```python
+from timecode import Timecode, TimecodeRange
+
+tc_start    = Timecode("01:00:00:00")
+tc_duration = Timecode("01:00")
+
+tc_range = TimecodeRange(start=tc_start, duration=tc_duration)
+
+print("Repr:",repr(tc_range))
+print("Len:",len(tc_range))
+print("Start:",tc_range.start)
+print("End:",tc_range.end)
+
+print("Loop:")
+for tc in tc_range:
+     print(tc)
+```
+
 Outputs:
 
      Repr: <TimecodeRange 01:00:00:00 - 01:00:01:00 (1:00) @ 24 NDF>
