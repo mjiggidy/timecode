@@ -1,8 +1,4 @@
-"""
-Here lies the abstract `TimecodeMode` class from which any concrete frame counting modes should descend.
-The venerable `NonDropFrame` and `DropFrame` counting modes are somewhere around here too.
-It's an upscale community.
-"""
+"""Contains `DropFrame` and `NonDropFrame` counting modes, as well as the abstract `TimecodeMode` from which other modes can be created."""
 
 import abc, typing
 
