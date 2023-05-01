@@ -17,6 +17,7 @@ The `Timecode` class defaults to 24fps, Non-Drop Frame timecode.  A frame number
      print("Frames:",tc.frame_number)
 
 Output:
+
      Repr: <Timecode 01:00:00:00 @ 24 NDF>
      String: 01:00:00:00
      Frames: 86400
@@ -30,6 +31,7 @@ Frame rate and counting modes can be specified explicitly:
      print("Frames:",tc.frame_number)
 
 Output will be the same as before:
+
      Repr: <Timecode 01:00:00:00 @ 24 NDF>
      String: 01:00:00:00
      Frames: 86400
@@ -47,6 +49,7 @@ Each counting mode defaults to an ideal frame rate if not specified.  `NonDropFr
      print("Frames:",tc.frame_number)
 
 Output:
+
      Repr: <Timecode 00;48;02;28 @ 30 DF>
      String: 00;48;02;28
      Frames: 86400
