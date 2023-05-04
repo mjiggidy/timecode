@@ -1,9 +1,10 @@
 Welcome to Lumache's documentation!
 ===================================
 
-`timecode` is a python library for addressing frames and frame ranges using timecode.
-It supports frame counting modes such as Drop Frame and Non-Drop Frame, handles conversions 
-between different frame rates and counting modes, and supports iterable timecode ranges.
+**Lumache** (/lu'make/) is a Python library for cooks and food lovers
+that creates recipes mixing random ingredients.
+It pulls data from the `Open Food Facts database <https://world.openfoodfacts.org/>`_
+and offers a *simple* and *intuitive* API.
 
 Check out the :doc:`usage` section for further information, including
 how to :ref:`installation` the project.
