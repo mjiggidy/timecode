@@ -8,6 +8,8 @@ class TimecodeRange:
 
 	ALLOW_NEGATIVE_RANGES = False
 	"""Allow a start timecode which is later than the end timecode"""
+
+	__slots__ = ("_start_tc", "_duration")
 	
 	def __init__(self, start:typing.Union[Timecode,str,int], duration:typing.Union[Timecode,int,None]=None, end:typing.Union[Timecode,int,None]=None):
 		

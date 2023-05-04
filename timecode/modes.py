@@ -14,6 +14,8 @@ class TimecodeMode(abc.ABC):
 	DEFAULT_RATE = 24
 	"""The default frame rate to use if not provided"""
 
+	__slots__ = ()
+
 	@classmethod
 	def validate_rate(cls, rate:typing.Optional[int]=None) -> int:
 		"""Validate and clean the user-provided rate"""
