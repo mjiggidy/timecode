@@ -1,9 +1,8 @@
 API
 ===
 
-.. autosummary::
-   :toctree: generated
+.. toctree::
 
-   timecode.Timecode
-   timecode.TimecodeRange
-   timecode.modes
+   timecode
+   timecoderange
+   countingmodes
