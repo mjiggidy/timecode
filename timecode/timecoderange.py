@@ -1,7 +1,8 @@
 """Contains the `TimecodeRange` class, which represents a continuous range of frames"""
 
 import typing
-from . import Timecode, Modes
+from . import Timecode
+from .modes import CountingMode
 
 class TimecodeRange:
 	"""A timecode range"""
@@ -44,7 +45,7 @@ class TimecodeRange:
 		return self.start.rate
 	
 	@property
-	def mode(self) -> Modes.TimecodeMode:
+	def mode(self) -> CountingMode:
 		return self.start.mode
 	
 	def __len__(self) -> int:
