@@ -1,4 +1,4 @@
-from timecode import Timecode, TimecodeRange, NonDropFrame, DropFrame
+from timecode import Timecode, TimecodeRange, Modes
 
 tc1 = Timecode("-01:00:00:00", rate=24)
 tc2 = Timecode("-0:02:30:15", rate=30)
@@ -19,7 +19,7 @@ print("---")
 
 print("30 DF range:")
 prev_tc:Timecode = None
-for tc in TimecodeRange(start=Timecode(0, mode=DropFrame()), duration=Timecode(5000000, mode=DropFrame())):
+for tc in TimecodeRange(start=Timecode(0, mode=Modes.DropFrame()), duration=Timecode(5000000, mode=Modes.DropFrame())):
 	if prev_tc is not None and prev_tc.frames != (tc.frames-1)%tc.rate:
 		print(prev_tc, f"({prev_tc.frame_number})")
 		print(tc, f"({tc.frame_number})")
