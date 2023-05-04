@@ -2,9 +2,9 @@
 
 # -- Project information
 
-project = 'Lumache'
-copyright = '2021, Graziella'
-author = 'Graziella'
+project = 'timecode'
+copyright = '2023, Michael J. Jordan'
+author = 'Michael J. Jordan'
 
 release = '0.1'
 version = '0.1.0'

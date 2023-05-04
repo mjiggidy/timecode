@@ -6,28 +6,28 @@ Usage
 Installation
 ------------
 
-To use Lumache, first install it using pip:
+To use `timecode`, first install it using pip:
 
 .. code-block:: console
 
-   (.venv) $ pip install lumache
+   (.venv) $ pip install timecode
 
-Creating recipes
+Creating timecode
 ----------------
 
 To retrieve a list of random ingredients,
 you can use the ``lumache.get_random_ingredients()`` function:
 
-.. autofunction:: lumache.get_random_ingredients
+.. autofunction:: timecode.Timecode.__init__()
 
 The ``kind`` parameter should be either ``"meat"``, ``"fish"``,
-or ``"veggies"``. Otherwise, :py:func:`lumache.get_random_ingredients`
+or ``"veggies"``. Otherwise, :py:func:`timecode.Timecode.__init__()`
 will raise an exception.
 
-.. autoexception:: lumache.InvalidKindError
+.. .. autoexception:: timecode.InvalidKindError
 
 For example:
 
->>> import lumache
->>> lumache.get_random_ingredients()
-['shells', 'gorgonzola', 'parsley']
+>>> from timecode import Timecode
+>>> Timecode(86400)
+<Timecode 01:00:00:00 @ 24 NDF>
