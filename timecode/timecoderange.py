@@ -5,8 +5,11 @@ from . import Timecode, Modes
 
 class TimecodeRange:
 	"""A timecode range"""
+
+	ALLOW_NEGATIVE_RANGES = False
+	"""Allow a start timecode which is later than the end timecode"""
 	
-	def __init__(self, start:typing.Union[Timecode,str,int], duration:typing.Union[Timecode,int,None]=None, end=typing.Union[Timecode,int,None]):
+	def __init__(self, start:typing.Union[Timecode,str,int], duration:typing.Union[Timecode,int,None]=None, end:typing.Union[Timecode,int,None]=None):
 		
 		self._start_tc = start if isinstance(start, Timecode) else Timecode(start)
 		
@@ -15,7 +18,7 @@ class TimecodeRange:
 		if duration is not None:
 			self._duration = int(duration)
 		elif end is not None:
-			self._duration = int(end if isinstance(end, Timecode) else Timecode(end) - self._start_tc)
+			self._duration = int(Timecode(end) - self._start_tc)
 		else:
 			raise ValueError(f"One of `duration` or `end` must be provided")
 
