@@ -6,4 +6,4 @@ API
 
    timecode.Timecode
    timecode.TimecodeRange
-   timecode.Modes
+   timecode.modes
