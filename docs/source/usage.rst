@@ -12,13 +12,13 @@ To use `timecode`, first install it using pip:
 
    (.venv) $ pip install timecode
 
-Creating timecode
-----------------
+Creating a timecode
+-------------------
 
 To retrieve a list of random ingredients,
 you can use the ``lumache.get_random_ingredients()`` function:
 
-.. autofunction:: timecode.Timecode.__init__()
+.. autoclass:: timecode.Timecode
 
 The ``kind`` parameter should be either ``"meat"``, ``"fish"``,
 or ``"veggies"``. Otherwise, :py:func:`timecode.Timecode.__init__()`

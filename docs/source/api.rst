@@ -6,5 +6,4 @@ API
 
    timecode.Timecode
    timecode.TimecodeRange
-   timecode.Modes.NonDropFrame
-   timecode.Modes.DropFrame
+   timecode.modes
