@@ -121,7 +121,7 @@ class Timecode:
 		"""Determine if an object can be compared properly to Timecode"""
 		# TODO: Only comparing like types for now
 		if isinstance(other, self.__class__):
-			return self.mode == other.mode and self.rate == other.rate
+			return self.mode.__class__ == other.mode.__class__ and self.rate == other.rate
 		elif isinstance(other, int):
 			return True
 		else:
