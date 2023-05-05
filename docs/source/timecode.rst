@@ -1,5 +1,5 @@
 Timecode
 ========
 
-.. autoclass:: timecode.Timecode
+.. autoclass:: Timecode
    :members:
