@@ -1,4 +1,5 @@
-from timecode import Timecode, DropFrame, TimecodeRange
+from timecode import Timecode, TimecodeRange
+from timecode.modes import DropFrame
 
 def debug_range(tc_range: TimecodeRange):
 	tc_old = Timecode(0, mode=DropFrame())
