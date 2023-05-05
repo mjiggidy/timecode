@@ -12,6 +12,9 @@ To use `timecode`, first install it using pip:
 
    (.venv) $ pip install timecode
 
+Timecode
+--------
+
 `Timecode` assumes Non Drop Frame mode by default.  Non Drop Frame assumes 24fps by default.
 But let me tell you something: you can set those to whatever you need.
 
@@ -49,6 +52,14 @@ Oh!  You can convert from one kind to another:
 <Timecode 00;48;23;13 (88) @ 30 DF>
 
 Or resample:
+
+TimecodeRange
+-------------
+Yes
+
+Counting Modes
+--------------
+Also yes
 
 .. Creating recipes
 .. ----------------
