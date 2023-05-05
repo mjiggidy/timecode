@@ -1,6 +1,6 @@
 Counting Modes
 ==============
 
-.. automodule:: timecode.modes
+.. automodule:: modes
    :members:
    :show-inheritance:
