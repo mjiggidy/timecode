@@ -16,9 +16,9 @@ class Timecode:
 		# If a timecode object is provided, make a copy of it
 		if isinstance(timecode, self.__class__):
 			if mode is not None and timecode.mode is type(mode):
-				raise ValueError(f"The mode provided ({mode}) does not match the mode of the timecode object passed ({timecode.mode}).  Use Timecode.convert() to change the mode of an existing Timecode object.")
+				raise ValueError(f"The mode provided ({mode}) does not match the mode of the timecode object passed ({timecode.mode}).  Use Timecode.resample() to change the mode of an existing Timecode object.")
 			elif rate is not None and timecode.rate != rate:
-				raise ValueError(f"The rate provided ({rate}) does not match the rate of the timecode object passed ({timecode.rate}).  Use Timecode.convert() to change the rate of an existing Timecode object.")
+				raise ValueError(f"The rate provided ({rate}) does not match the rate of the timecode object passed ({timecode.rate}).  Use Timecode.resample() to change the rate of an existing Timecode object.")
 			mode = timecode.mode
 			rate = timecode.rate
 			timecode = timecode.frame_number
@@ -40,7 +40,7 @@ class Timecode:
 
 		raise ValueError(f"Mode must be an instance of the `CountingMode` class")
 	
-	def convert(self, *, mode:typing.Optional[CountingMode]=None, rate:typing.Optional[int]=None):
+	def resample(self, *, mode:typing.Optional[CountingMode]=None, rate:typing.Optional[int]=None):
 		"""Create a new timecode object resampled to a new rate or frame counting mode"""
 
 		# NOTE: These fellas'll be further validated in the constructor
@@ -152,9 +152,35 @@ class Timecode:
 			raise TypeError(f"Cannot compare {self.__class__.__name__} to {other.__class__.__name__}")
 		return self.__class__(int(self) + int(other), mode=self.mode, rate=self.rate)
 	
+	def __radd__(self, other) -> "Timecode":
+		return self + other
+	
 	def __sub__(self, other) -> "Timecode":
 		if not self._is_compatible(other):
 			raise TypeError(f"Cannot compare {self.__class__.__name__} to {other.__class__.__name__}")
 		return self.__class__(int(self) - int(other), mode=self.mode, rate=self.rate)
+	
+	def __rsub__(self, other) -> "Timecode":
+		if not self._is_compatible(other):
+			raise TypeError(f"Cannot compare {self.__class__.__name__} to {other.__class__.__name__}")
+		return self.__class__(int(other) - int(self), mode=self.mode, rate=self.rate)
+	
+	def __mul__(self, other) -> "Timecode":
+		if not self._is_compatible(other):
+			raise TypeError(f"Cannot compare {self.__class__.__name__} to {other.__class__.__name__}")
+		return self.__class__(int(self) * int(other), mode=self.mode, rate=self.rate)
+	
+	def __rmul__(self, other) -> "Timecode":
+		return self * other
+	
+	def __truediv__(self, other) -> "Timecode":
+		if not self._is_compatible(other):
+			raise TypeError(f"Cannot compare {self.__class__.__name__} to {other.__class__.__name__}")
+		return self.__class__(round(int(self) / int(other)), mode=self.mode, rate=self.rate)
+	
+	def __rtruediv__(self, other) -> "Timecode":
+		if not self._is_compatible(other):
+			raise TypeError(f"Cannot compare {self.__class__.__name__} to {other.__class__.__name__}")
+		return self.__class__(round(int(other) / int(self)), mode=self.mode, rate=self.rate)		
 	
 	# TODO: More?
