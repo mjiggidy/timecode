@@ -4,3 +4,7 @@ __pycache__
 /include
 /lib
 /pyvenv.cfg
+
+# rtd
+docs/build
+docs/source/generated
