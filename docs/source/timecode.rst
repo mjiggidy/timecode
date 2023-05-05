@@ -1,7 +1,5 @@
 Timecode
 ========
 
-.. currentmodule:: timecode
-
-.. autoclass:: Timecode
+.. autoclass:: timecode.Timecode
    :members:
