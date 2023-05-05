@@ -1,5 +1,5 @@
 TimecodeRange
 =============
 
-.. autoclass:: timecode.TimecodeRange
+.. autoclass:: TimecodeRange
    :members:
