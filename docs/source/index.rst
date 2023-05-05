@@ -4,26 +4,43 @@ How to timecode
 Timecode
 --------
 
-Let's get ya started real quick here:
+Let's get ya started real quick here.
 
+>>> # Import it
 >>> from timecode import Timecode
-..
+
 >>> # Timecode from a frame number
 >>> Timecode(86400)
 <Timecode 01:00:00:00 @ 24 NDF>
-..
+
 >>> # Timecode from a string
 >>> Timecode("01:00:00:00")
 <Timecode 01:00:00:00 @ 24 NDF>
 ..
->>> # Specifying a rate
+>>> # Protip: You don't need leading zeroes
+>>> Timecode("30:00")
+<Timecode 00:00:30:00 @ 24 NDF>
+
+----
+
+Specify a rate (see:  :ref:`use_rate`)
+
+>>> # Specify a rate
 >>> Timecode("59:40", rate=30)
 <Timecode 00:00:59:40 @ 30 NDF>
-..
->>> # Specifying a different counting mode
+
+----
+
+Specify a counting mode (see:  :ref:`use_mode`)
+
+>>> # Specify a different counting mode
 >>> from timecode.modes import DropFrame
 >>> Timecode("32:19;28", mode=DropFrame())
 <Timecode 00;32;19;28 @ 30 DF>
+
+----
+
+For more information, check out the :ref:`use_timecode` section of the :doc:`usage`.
 
 TimecodeRange
 -------------
@@ -52,14 +69,9 @@ Define a range of frames by start, end, and/or duration!
 00:59:59:08
 00:59:59:09
 
+----
 
-
-
-
-
-
-Check out the :doc:`usage` section for further information, including
-how to :ref:`installation` the project.
+For more information, check out the :ref:`use_timecoderange` section of the :doc:`usage`.
 
 .. note::
 
@@ -69,6 +81,7 @@ Contents
 --------
 
 .. toctree::
-
+   :maxdepth: 2
+   
    usage
    api

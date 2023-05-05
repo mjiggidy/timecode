@@ -1,16 +1,19 @@
-Usage
-=====
+User's Guide
+============
 
 .. _installation:
 
 Installation
 ------------
 
-To use `timecode`, first install it using pip:
+To use :py:mod:`timecode`, first install it using pip:
 
 .. code-block:: console
 
    (.venv) $ pip install timecode
+
+
+.. _use_timecode:
 
 Timecode
 --------
@@ -18,12 +21,16 @@ Timecode
 .. autoclass:: timecode.Timecode
    :noindex:
 
+.. _use_mode:
+
 Specifying the Counting Mode
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Timecode will default to :py:class:`~timecode.modes.NonDropFrame` mode, unless otherwise specified.
+:py:class:`~timecode.Timecode` will default to :py:class:`~timecode.modes.NonDropFrame` mode, unless otherwise specified.
 
 :py:class:`~timecode.modes.NonDropFrame` and :py:class:`~timecode.modes.DropFrame` counting modes are available in the :py:mod:`timecode.modes` subpackage.
+
+A :py:class:`~timecode.modes.CountingMode` can be set during the creation of a :py:class:`~timecode.Timecode` object by setting the ``mode`` parameter.
 
 >>> from timecode import Timecode
 >>> from timecode.modes import DropFrame
@@ -31,18 +38,19 @@ Timecode will default to :py:class:`~timecode.modes.NonDropFrame` mode, unless o
 >>> Timecode(86400, mode=DropFrame())
 <Timecode 00;48;02;28 @ 30 DF>
 
-The default counting mode can be set program-wide by assigning a :py:class:`~timecode.modes.CountingMode` to :py:const:`timecode.Timecode.DEFAULT_MODE` 
+The default counting mode can be set program-wide by assigning a :py:class:`~timecode.modes.CountingMode` class to :py:const:`timecode.Timecode.DEFAULT_MODE` 
 
 .. note::
-   Also included in the :py:mod:`timecode.modes` subpackage is an abstract class, :py:class:`~timecode.modes.CountingMode`, which can be used to make your 
+   Also included in the :py:mod:`timecode.modes` subpackage is an abstract class :py:class:`~timecode.modes.CountingMode`, which can be subclassed to make your 
    own weird little counting modes.  Give it a shot!
 
+.. _use_rate:
 
 Specifying the rate
 ~~~~~~~~~~~~~~~~~~~
 
-Timecode will default to the  :py:const:`~timecode.modes.CountingMode.DEFAULT_RATE` set by the :py:class:`~timecode.modes.CountingMode` in use.  Or, it 
-may be set with the `rate` argument.
+:py:class:`~timecode.Timecode` will default to the :py:const:`~timecode.modes.CountingMode.DEFAULT_RATE` set by the :py:class:`~timecode.modes.CountingMode`.  Or, it 
+may be explicitly set with the ``rate`` parameter.
 
 >>> from timecode import Timecode
 ..
@@ -61,24 +69,29 @@ So you got all these timecodes goin', but what do you do with them?  Well I gues
 
 >>> # Two Timecodes
 >>> Timecode("01:00:01:00") + Timecode("02:03")
-<Timecode 01:00:12:03 @ 24 NDF>
+<Timecode 01:00:03:03 @ 24 NDF>
 ..
 >>> # A Timecode and some frames
 >>> Timecode("59:59:00") + 24
 <Timecode 01:00:00:00 @ 24 NDF>
 
-Oh!  You can :py:meth:`~timecode.Timecode.convert` from one kind to another:
+Oh!  You can :py:meth:`~timecode.Timecode.resample` from one kind to another:
 
 >>> from timecode import Timecode
 >>> from timecode.modes import DropFrame, NonDropFrame
 ..
->>> Timecode("00:48:20:12", mode=NonDropFrame()).convert(rate=30)
+>>> Timecode("00:48:20:12", mode=NonDropFrame()).resample(rate=30)
 <Timecode 00:48:20:15 @ 30 NDF>
 ..
->>> Timecode("00:48:20:15", rate=30, mode=NonDropFrame()).convert(mode=DropFrame())
+>>> Timecode("00:48:20:15", rate=30, mode=NonDropFrame()).resample(mode=DropFrame())
 <Timecode 00;48;23;13 (88) @ 30 DF>
 
-Or resample:
+More Info
+~~~~~~~~~
+
+See :py:class:`timecode.Timecode` in the :doc:`api`.
+
+.. _use_timecoderange:
 
 TimecodeRange
 -------------
@@ -88,9 +101,19 @@ TimecodeRange
 
 Yes
 
+More Info
+~~~~~~~~~
+
+See :py:class:`timecode.TimecodeRange` in the :doc:`api`.
+
 Counting Modes
 --------------
 Also yes
+
+More Info
+~~~~~~~~~
+
+See :py:class:`timecode.modes.CountingMode` in the :doc:`api`.
 
 .. Creating recipes
 .. ----------------
