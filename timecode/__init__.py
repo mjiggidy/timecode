@@ -1,3 +1,4 @@
+from . import modes
 from .timecode import Timecode
 from .timecoderange import TimecodeRange
 
