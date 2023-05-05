@@ -5,6 +5,8 @@ __pycache__
 /lib
 /pyvenv.cfg
 
+Scripts
+
 # rtd
 docs/build
 docs/source/generated
