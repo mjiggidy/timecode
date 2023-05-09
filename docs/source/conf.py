@@ -11,8 +11,7 @@ version = '0.1.0'
 
 # -- General configuration
 
-# What the
-#autodoc_mock_imports = ["timecode.modes"]
+autodoc_member_order = 'bysource'
 
 extensions = [
 	'sphinx.ext.duration',
