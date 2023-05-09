@@ -1,13 +1,15 @@
-How to timecode
+Getting Started
 ===============
+
+Let's get ya started real quick here.
 
 Timecode
 --------
 
-Let's get ya started real quick here.
-
 >>> # Import it
 >>> from timecode import Timecode
+
+You can create a :py:class:`~timecode.Timecode` from a frame number, or a timecode :py:class:`str`.
 
 >>> # Timecode from a frame number
 >>> Timecode(86400)

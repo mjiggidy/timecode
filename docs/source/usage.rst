@@ -26,11 +26,11 @@ Timecode
 Specifying the Counting Mode
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-:py:class:`~timecode.Timecode` will default to :py:class:`~timecode.modes.NonDropFrame` mode, unless otherwise specified.
+A :py:class:`~timecode.modes.CountingMode` can be set during the creation of a :py:class:`~timecode.Timecode` object by setting the ``mode`` parameter.
 
 :py:class:`~timecode.modes.NonDropFrame` and :py:class:`~timecode.modes.DropFrame` counting modes are available in the :py:mod:`timecode.modes` subpackage.
 
-A :py:class:`~timecode.modes.CountingMode` can be set during the creation of a :py:class:`~timecode.Timecode` object by setting the ``mode`` parameter.
+:py:class:`~timecode.Timecode` will default to :py:class:`~timecode.modes.NonDropFrame` mode, unless otherwise specified.
 
 >>> from timecode import Timecode
 >>> from timecode.modes import DropFrame
@@ -99,7 +99,53 @@ TimecodeRange
 .. autoclass:: timecode.TimecodeRange
    :noindex:
 
-Yes
+Specifying A Range
+~~~~~~~~~~~~~~~~~~
+
+:py:class:`~timecode.TimecodeRange` requires at least two of the following parameters: ``start``, ``duration``, ``end``.  The third parameter will be calculated from the other 
+two if it is not given.
+
+>>> from timecode import Timecode, TimecodeRange
+>>> from timecode.modes import DropFrame, NonDropFrame
+..
+>>> # Create a `TimecodeRange` from a start and duration
+>>> tc_start    = Timecode("00:59:59:00")
+>>> tc_duration = Timecode("01:02:00")
+>>> TimecodeRange(start=tc_start, duration=tc_duration)
+<TimecodeRange 00:59:59:00 - 01:01:01:00 (1488) @ 24 NDF>
+
+>>> # Create a `TimecodeRange` from a start and an end
+>>> tc_start  = Timecode("00:59:59:00")
+>>> tc_end    = Timecode("01:01:01:00")
+>>> TimecodeRange(start=tc_start, end=tc_end)
+<TimecodeRange 00:59:59:00 - 01:01:01:00 (1488) @ 24 NDF>
+
+``start``, ``duration``, and ``end`` can be provided as :py:class:`~timecode.Timecode` objects, or as any of the standard types supported by the :py:class:`~timecode.Timecode` 
+constructor (:py:class:`str` or :py:class:`int`).  The types can be mixed and matched for each input parameter.  
+
+>>> # Create a `TimecodeRange` that is 48 frames long
+>>> tc_start     = Timecode("01:00:00:00")
+>>> frm_duration = 48
+>>> TimecodeRange(start=tc_start, duration=frm_duration)
+<TimecodeRange 01:00:00:00 - 01:00:02:00 (48) @ 24 NDF>
+
+CountingModes and Rates
+~~~~~~~~~~~~~~~~~~~~~~~
+
+The :py:class:`~timecode.modes.CountingMode` and rate of the :py:class:`~timecode.TimecodeRange` object is determined by the ``mode`` and ``rate`` of the input :py:class:`~timecode.Timecode` objects; 
+or by the :py:class:`~timecode.Timecode`  defaults if none are provided.  Thus, to set the ``mode`` and/or ``rate`` for  a :py:class:`~timecode.TimecodeRange`, at least one of the inputs should be a 
+:py:class:`~timecode.Timecode` object with the desired settings.
+
+>>> # Create a `TimecodeRange` that is 60 FPS drop frame (oh my)
+>>> tc_start = Timecode("01:00:00;00", rate=60, mode=DropFrame())
+>>> duration = 120
+>>> TimecodeRange(start=tc_start, duration=duration)
+<TimecodeRange 01;00;00;00 - 01;00;02;00 (120) @ 60 DF>
+
+.. warning::
+   If more than one of the input parameters are :py:class:`~timecode.Timecode` objects, they must all have matching :py:class:`~timecode.modes.CountingMode`\s and ``rate``\s.  Otherwise, :py:class:`~timecode.TimecodeRange` 
+   will raise an exception.
+
 
 More Info
 ~~~~~~~~~
