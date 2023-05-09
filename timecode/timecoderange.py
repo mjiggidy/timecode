@@ -1,6 +1,6 @@
 """Contains the `TimecodeRange` class, which represents a continuous range of frames"""
 
-import typing, copy
+import typing
 from . import Timecode
 from .modes import CountingMode
 
