@@ -16,9 +16,9 @@ class TimecodeRange:
 
 		rate, mode = self._get_common_mode(start, duration, end)
 
-		self._start_tc = Timecode(start, rate=rate, mode=mode()) if start else None
-		self._duration = Timecode(duration, rate=rate, mode=mode()) if duration else None
-		end = Timecode(end, rate=rate, mode=mode()) if end else None
+		self._start_tc = Timecode(start, rate=rate, mode=mode()) if start is not None else None
+		self._duration = Timecode(duration, rate=rate, mode=mode()) if duration is not None else None
+		end = Timecode(end, rate=rate, mode=mode()) if end is not None else None
 
 		
 		if end:
@@ -31,7 +31,7 @@ class TimecodeRange:
 				if self.start + self.duration != end:
 					raise ValueError("`end` does not match `start` + `duration`")
 		
-		if not self.start and self.duration:
+		if not self._start_tc and self._duration:
 			raise ValueError(f"Two of `start`,`duration`, and `end` are required")
 	
 	@classmethod
