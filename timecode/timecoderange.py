@@ -16,9 +16,9 @@ class TimecodeRange:
 
 		rate, mode = self._get_common_mode(start, duration, end)
 
-		self._start_tc = Timecode(start, rate=rate, mode=mode()) if start else None
-		self._duration = Timecode(duration, rate=rate, mode=mode()) if duration else None
-		end = Timecode(end, rate=rate, mode=mode()) if end else None
+		self._start_tc = Timecode(start, rate=rate, mode=mode()) if start is not None else None
+		self._duration = Timecode(duration, rate=rate, mode=mode()) if duration is not None else None
+		end = Timecode(end, rate=rate, mode=mode()) if end is not None else None
 
 		
 		if end:
@@ -31,8 +31,11 @@ class TimecodeRange:
 				if self.start + self.duration != end:
 					raise ValueError("`end` does not match `start` + `duration`")
 		
-		if not self.start and self.duration:
+		if not self._start_tc and self._duration:
 			raise ValueError(f"Two of `start`,`duration`, and `end` are required")
+		
+		if not self.ALLOW_NEGATIVE_RANGES and self._duration < 0:
+			raise ValueError("Negative durations are not allowed (end cannot occur before start)")
 	
 	@classmethod
 	def _get_common_mode(cls, *args:typing.Iterable[typing.Union[Timecode,str,int,None]]) -> typing.Tuple[int, CountingMode]:
@@ -90,3 +93,18 @@ class TimecodeRange:
 	
 	def __repr__(self) -> str:
 		return f"<{self.__class__.__name__} {self.start} - {self.end} ({str(self.duration.frame_number).lstrip('00:')}) @ {self.rate} {self.mode}>"
+	
+	def __contains__(self, other) -> bool:
+
+		# Compare `TimecodeRange` instances
+		if isinstance(other, self.__class__):
+			return self.start <= other.start and self.end >= other.end
+
+		# Compare `Timecode` instances (or convert to `Timecode` if it isn't)
+		if isinstance(other, Timecode):
+			if other.rate != self.rate or type(other.mode) is not type(self.mode):
+				return False
+		else:
+			other = Timecode(other, rate=self.rate, mode=self.mode)
+		
+		return self.start.frame_number<=other.frame_number and self.end.frame_number>other.frame_number
