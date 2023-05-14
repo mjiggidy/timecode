@@ -79,11 +79,8 @@ For more information, check out the :ref:`use_timecoderange` section of the :doc
 
    This project is under active development.
 
-Contents
---------
-
 .. toctree::
-   :maxdepth: 2
+   :hidden:
    
    usage
    api
