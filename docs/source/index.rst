@@ -95,3 +95,9 @@ For more information, check out the :doc:`usage/timecoderange` section of the Us
    api/timecoderange
    api/countingmodes
    api/footage
+
+.. toctree::
+   :caption: Links
+   :hidden:
+   
+   Github Repo <https://github.com/mjiggidy/timecode/>
