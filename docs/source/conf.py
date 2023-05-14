@@ -14,6 +14,7 @@ version = '0.1.0'
 autodoc_member_order = 'bysource'
 
 extensions = [
+	'sphinxcontrib.jquery',
 	'sphinx.ext.duration',
 	'sphinx.ext.doctest',
 	'sphinx.ext.autodoc',
