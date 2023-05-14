@@ -94,3 +94,4 @@ For more information, check out the :doc:`usage/timecoderange` section of the Us
    api/timecode
    api/timecoderange
    api/countingmodes
+   api/footage
