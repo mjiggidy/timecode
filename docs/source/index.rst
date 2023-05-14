@@ -23,15 +23,11 @@ You can create a :py:class:`~timecode.Timecode` from a frame number, or a timeco
 >>> Timecode("30:00")
 <Timecode 00:00:30:00 @ 24 NDF>
 
-----
-
 Specify a rate (see: :ref:`use_rate`)
 
 >>> # Specify a rate
 >>> Timecode("59:40", rate=30)
 <Timecode 00:00:59:40 @ 30 NDF>
-
-----
 
 Specify a counting mode (see: :ref:`use_mode`)
 
@@ -39,8 +35,6 @@ Specify a counting mode (see: :ref:`use_mode`)
 >>> from timecode.modes import DropFrame
 >>> Timecode("32:19;28", mode=DropFrame())
 <Timecode 00;32;19;28 @ 30 DF>
-
-----
 
 For more information, check out the :doc:`usage/timecode` section of the Users Guide.
 
@@ -70,8 +64,6 @@ Define a range of frames by start, end, and/or duration!
 00:59:59:07
 00:59:59:08
 00:59:59:09
-
-----
 
 For more information, check out the :doc:`usage/timecoderange` section of the Users Guide.
 
