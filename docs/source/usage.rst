@@ -99,8 +99,8 @@ TimecodeRange
 .. autoclass:: timecode.TimecodeRange
    :noindex:
 
-Specifying A Range
-~~~~~~~~~~~~~~~~~~
+Creating A Range
+~~~~~~~~~~~~~~~~
 
 :py:class:`~timecode.TimecodeRange` requires at least two of the following parameters: ``start``, ``duration``, ``end``.  The third parameter will be calculated from the other 
 two if it is not given.
@@ -211,6 +211,14 @@ True
 ..
 >>> # Based on a `Timecode` object
 >>> Timecode("01:00:00:05") in tc_range
+True
+
+Subsets
+*******
+
+>>> # Check if all frames in a `TimecodeRange` exist in another `TimecodeRange`
+>>> tc_range_inner = TimecodeRange(start="01:00:00:05", duration=2)
+>>> tc_range_inner in tc_range
 True
 
 More Info
