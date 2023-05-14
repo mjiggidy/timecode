@@ -1,10 +1,7 @@
 Timecode
 ========
 
-Timecoooode
------------
-
-Timecode is good.
+:py:class:`~timecode.Timecode` is good.
 
 .. autoclass:: timecode.Timecode
    :noindex:
