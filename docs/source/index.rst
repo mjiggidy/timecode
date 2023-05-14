@@ -42,7 +42,7 @@ Specify a counting mode (see:  :ref:`use_mode`)
 
 ----
 
-For more information, check out the :ref:`use_timecode` section of the :doc:`usage`.
+For more information, check out the :doc:`usage/timecode` section of the Users Guide.
 
 TimecodeRange
 -------------
@@ -73,17 +73,24 @@ Define a range of frames by start, end, and/or duration!
 
 ----
 
-For more information, check out the :ref:`use_timecoderange` section of the :doc:`usage`.
+For more information, check out the :doc:`usage/timecoderange` section of the Users Guide.
 
 .. note::
 
    This project is under active development.
 
-Contents
---------
+.. toctree::
+   :caption: Users Guide
+   :hidden:
+   
+   usage/timecode
+   usage/timecoderange
+   usage/countingmodes
 
 .. toctree::
-   :maxdepth: 2
-   
-   usage
-   api
+   :caption: API Documentation
+   :hidden:
+
+   api/timecode
+   api/timecoderange
+   api/countingmodes

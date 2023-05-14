@@ -14,6 +14,7 @@ version = '0.1.0'
 autodoc_member_order = 'bysource'
 
 extensions = [
+	'sphinxcontrib.jquery',
 	'sphinx.ext.duration',
 	'sphinx.ext.doctest',
 	'sphinx.ext.autodoc',
@@ -32,6 +33,11 @@ templates_path = ['_templates']
 # -- Options for HTML output
 
 html_theme = 'sphinx_rtd_theme'
+
+html_theme_options = {
+	'collapse_navigation': False,
+	'style_external_links': False,
+}
 
 # -- Options for EPUB output
 epub_show_urls = 'footnote'
