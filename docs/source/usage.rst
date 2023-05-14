@@ -146,6 +146,72 @@ or by the :py:class:`~timecode.Timecode`  defaults if none are provided.  Thus, 
    If more than one of the input parameters are :py:class:`~timecode.Timecode` objects, they must all have matching :py:class:`~timecode.modes.CountingMode`\s and ``rate``\s.  Otherwise, :py:class:`~timecode.TimecodeRange` 
    will raise an exception.
 
+Using TimecodeRange
+~~~~~~~~~~~~~~~~~~~
+
+>>> from timecode import Timecode, TimecodeRange
+...
+>>> tc_start = Timecode("01:00:00:00")
+>>> tc_duration = Timecode("00:10")
+>>> tc_range = TimecodeRange(start=tc_start, duration=tc_duration)
+>>> tc_range
+<TimecodeRange 01:00:00:00 - 01:00:00:10 (10) @ 24 NDF>
+
+Accessing Properties
+********************
+
+``start``\, ``duration``\, and ``end``\, properties return :py:class:`~timecode.Timecode` objects.
+
+>>> tc_range.start
+<Timecode 01:00:00:00 @ 24 NDF>
+..
+>>> tc_range.start.frame_number
+86400
+..
+>>> tc_range.duration
+<Timecode 00:00:00:10 @ 24 NDF>
+..
+>>> tc_range.end
+<Timecode 01:00:00:10 @ 24 NDF>
+..
+>>> tc_range.end.frame_number
+86410
+
+Iterating over a :py:class:`~timecode.TimecodeRange`
+****************************************************
+
+>>> len(tc_range)
+10
+..
+>>> for tc in tc_range:
+...     repr(tc)
+...
+'<Timecode 01:00:00:00 @ 24 NDF>'
+'<Timecode 01:00:00:01 @ 24 NDF>'
+'<Timecode 01:00:00:02 @ 24 NDF>'
+'<Timecode 01:00:00:03 @ 24 NDF>'
+'<Timecode 01:00:00:04 @ 24 NDF>'
+'<Timecode 01:00:00:05 @ 24 NDF>'
+'<Timecode 01:00:00:06 @ 24 NDF>'
+'<Timecode 01:00:00:07 @ 24 NDF>'
+'<Timecode 01:00:00:08 @ 24 NDF>'
+'<Timecode 01:00:00:09 @ 24 NDF>'
+
+
+Checking For Membership
+***********************
+
+>>> # Based on Timecode string
+>>> "01:00:00:05" in tc_range
+True
+..
+>>> # Based on frame number
+>>> 86405 in tc_range
+True
+..
+>>> # Based on a `Timecode` object
+>>> Timecode("01:00:00:05") in tc_range
+True
 
 More Info
 ~~~~~~~~~
