@@ -1,6 +1,11 @@
 Timecode
 ========
 
+Timecoooode
+-----------
+
+Timecode is good.
+
 .. autoclass:: timecode.Timecode
    :noindex:
 
