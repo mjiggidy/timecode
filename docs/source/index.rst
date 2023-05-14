@@ -1,10 +1,10 @@
 Getting Started
 ===============
 
-Let's get ya started real quick here.
-
 Timecode
 --------
+
+Let's get ya started real quick here.
 
 >>> # Import it
 >>> from timecode import Timecode
@@ -25,7 +25,7 @@ You can create a :py:class:`~timecode.Timecode` from a frame number, or a timeco
 
 ----
 
-Specify a rate (see:  :ref:`use_rate`)
+Specify a rate (see: :ref:`use_rate`)
 
 >>> # Specify a rate
 >>> Timecode("59:40", rate=30)
@@ -33,7 +33,7 @@ Specify a rate (see:  :ref:`use_rate`)
 
 ----
 
-Specify a counting mode (see:  :ref:`use_mode`)
+Specify a counting mode (see: :ref:`use_mode`)
 
 >>> # Specify a different counting mode
 >>> from timecode.modes import DropFrame
