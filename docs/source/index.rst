@@ -1,3 +1,6 @@
+A Bunch Of Stuff About Timecode
+===============================
+
 .. toctree::
    :caption: Users Guide
    :hidden:
@@ -14,13 +17,11 @@
    api/timecoderange
    api/countingmodes
 
-Getting Started
-===============
 
 Let's get ya started real quick here.
 
-Timecode
---------
+Getting Started With Timecode
+-----------------------------
 
 >>> # Import it
 >>> from timecode import Timecode
@@ -60,8 +61,8 @@ Specify a counting mode (see:  :ref:`use_mode`)
 
 For more information, check out the :doc:`usage/timecode` section of the Users Guide.
 
-TimecodeRange
--------------
+Getting Started With TimecodeRange
+----------------------------------
 
 Define a range of frames by start, end, and/or duration!
 
