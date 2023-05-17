@@ -1,8 +1,27 @@
-Getting Started
-===============
+A Bunch Of Stuff About Timecode
+===============================
 
-Timecode
---------
+.. toctree::
+   :caption: Users Guide
+   :hidden:
+   
+   usage/timecode
+   usage/timecoderange
+   usage/countingmodes
+
+.. toctree::
+   :caption: API Documentation
+   :hidden:
+
+   api/timecode
+   api/timecoderange
+   api/countingmodes
+
+
+Let's get ya started real quick here.
+
+Getting Started With Timecode
+-----------------------------
 
 Let's get ya started real quick here.
 
@@ -38,8 +57,8 @@ Specify a counting mode (see: :ref:`use_mode`)
 
 For more information, check out the :doc:`usage/timecode` section of the Users Guide.
 
-TimecodeRange
--------------
+Getting Started With TimecodeRange
+----------------------------------
 
 Define a range of frames by start, end, and/or duration!
 
@@ -70,26 +89,3 @@ For more information, check out the :doc:`usage/timecoderange` section of the Us
 .. note::
 
    This project is under active development.
-
-.. toctree::
-   :caption: Users Guide
-   :hidden:
-   
-   usage/timecode
-   usage/timecoderange
-   usage/countingmodes
-
-.. toctree::
-   :caption: API Documentation
-   :hidden:
-
-   api/timecode
-   api/timecoderange
-   api/countingmodes
-   api/footage
-
-.. toctree::
-   :caption: Links
-   :hidden:
-   
-   Github Repo <https://github.com/mjiggidy/timecode/>
