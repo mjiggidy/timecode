@@ -1,3 +1,19 @@
+.. toctree::
+   :caption: Users Guide
+   :hidden:
+   
+   usage/timecode
+   usage/timecoderange
+   usage/countingmodes
+
+.. toctree::
+   :caption: API Documentation
+   :hidden:
+
+   api/timecode
+   api/timecoderange
+   api/countingmodes
+
 Getting Started
 ===============
 
@@ -78,19 +94,3 @@ For more information, check out the :doc:`usage/timecoderange` section of the Us
 .. note::
 
    This project is under active development.
-
-.. toctree::
-   :caption: Users Guide
-   :hidden:
-   
-   usage/timecode
-   usage/timecoderange
-   usage/countingmodes
-
-.. toctree::
-   :caption: API Documentation
-   :hidden:
-
-   api/timecode
-   api/timecoderange
-   api/countingmodes
