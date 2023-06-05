@@ -3,4 +3,5 @@ from timecode import Footage, Timecode
 for frames in range(-3200,3200):
 	footage = Footage(frames)
 	timecode = Timecode(frames)
-	print(f"{frames=}\t{footage=}\t{timecode=}")
+	as_int = int(frames)
+	print(f"{frames=}\t{as_int=}\t{footage=}\t{timecode=}")

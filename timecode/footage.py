@@ -58,3 +58,6 @@ class Footage:
 	
 	def __repr__(self) -> str:
 		return f"<{self.__class__.__name__} {str(self)} 35mm 4-perf>"
+	
+	def __int__(self) -> int:
+		return self._framenumber
