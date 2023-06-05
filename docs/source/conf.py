@@ -36,7 +36,7 @@ html_theme = 'sphinx_rtd_theme'
 
 html_theme_options = {
 	'collapse_navigation': False,
-	'style_external_links': False,
+	'style_external_links': True
 }
 
 # -- Options for EPUB output

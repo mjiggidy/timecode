@@ -1,6 +1,8 @@
 Timecode
 ========
 
+:py:class:`~timecode.Timecode` is good.
+
 .. autoclass:: timecode.Timecode
    :noindex:
 

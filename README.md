@@ -27,8 +27,8 @@ Output:
 Frame rate and counting modes can be specified explicitly:
 
 ```python
-from timecode import Timecode, Modes
-tc = Timecode("01:00:00:00", rate=24, mode=Modes.NonDropFrame())
+from timecode import Timecode, modes
+tc = Timecode("01:00:00:00", rate=24, mode=modes.NonDropFrame())
 print("Repr:",repr(tc))
 print("String:",tc)
 print("Frames:",tc.frame_number)
@@ -42,13 +42,13 @@ Output will be the same as before:
 
 ### Counting Modes
 
-Counting modes are provided in the `Modes` submodule.  `NonDropFrame` and `DropFrame` are provided, as well as a `TimecodeMode` abstract class which can be subclassed to create your own weird little counting modes.
+Counting modes are provided in the `modes` submodule.  `NonDropFrame` and `DropFrame` are provided, as well as a `TimecodeMode` abstract class which can be subclassed to create your own weird little counting modes.
 
 Each counting mode defaults to an ideal frame rate if not specified.  `NonDropFrame` creats a `Timecode` object with `rate=24` by default.  `DropFrame` creates a `Timecode` object with `rate=30` by default.  Of course, specifying a `Timecode` with `rate=` will force that frame rate.
 
 ```python
-from timecode import Timecode, Modes
-tc = Timecode(86400, mode=Modes.DropFrame())
+from timecode import Timecode, modes
+tc = Timecode(86400, mode=modes.DropFrame())
 print("Repr:",repr(tc))
 print("String:",tc)
 print("Frames:",tc.frame_number)
