@@ -1,6 +1,3 @@
-A Bunch Of Stuff About Timecode
-===============================
-
 .. toctree::
    :caption: Users Guide
    :hidden:
@@ -8,6 +5,7 @@ A Bunch Of Stuff About Timecode
    usage/timecode
    usage/timecoderange
    usage/countingmodes
+   usage/footage
 
 .. toctree::
    :caption: API Documentation
@@ -16,7 +14,10 @@ A Bunch Of Stuff About Timecode
    api/timecode
    api/timecoderange
    api/countingmodes
+   api/footage
 
+A Bunch Of Stuff About Timecode
+===============================
 
 Let's get ya started real quick here.
 
