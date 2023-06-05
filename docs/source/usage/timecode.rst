@@ -49,20 +49,28 @@ may be explicitly set with the ``rate`` parameter.
    :py:class:`~timecode.modes.DropFrame` only accepts frame rates which are multiples of 30.
 
 
-Math
-----
+Doin' Math
+----------
 
-So you got all these timecodes goin', but what do you do with them?  Well I guess you can add them together:
+Arithmetic
+~~~~~~~~~~
 
->>> # Two Timecodes
+:py:class:`timecode.Timecode` supports typical arithmetic operations (addition, subtraction, multiplication, and division) against 
+other :py:class:`timecode.Timecode` objects, as well as other :py:class:`int`\-type numbers.  If the operand is an :py:class:`int`\, 
+it will be assumed to be a frame number.
+
+>>> # Add two `Timecode`s
 >>> Timecode("01:00:01:00") + Timecode("02:03")
 <Timecode 01:00:03:03 @ 24 NDF>
 ..
->>> # A Timecode and some frames
+>>> # Add a `Timecode`` and some frames
 >>> Timecode("59:59:00") + 24
 <Timecode 01:00:00:00 @ 24 NDF>
 
-Oh!  You can :py:meth:`~timecode.Timecode.resample` from one kind to another:
+Resampling
+~~~~~~~~~~
+
+Oh!  You can :py:meth:`~timecode.Timecode.resample` a :py:class:`timecode.Timecode` object from one rate and/or mode to another.
 
 >>> from timecode import Timecode
 >>> from timecode.modes import DropFrame, NonDropFrame
@@ -72,6 +80,7 @@ Oh!  You can :py:meth:`~timecode.Timecode.resample` from one kind to another:
 ..
 >>> Timecode("00:48:20:15", rate=30, mode=NonDropFrame()).resample(mode=DropFrame())
 <Timecode 00;48;23;13 (88) @ 30 DF>
+
 
 More Info
 ---------
